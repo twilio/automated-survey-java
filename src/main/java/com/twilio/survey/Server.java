@@ -19,7 +19,9 @@ public class Server {
 		///
 		port(Server.config.port); // configure Spark to use the desired port. 
 		
-		// TODO: Map routes to controllers.
+		// Map routes to controllers.
 		get("/", SurveyController.index);
+		get("/id/:id", SurveyController.getResponse);
+		post("/new/:phone", SurveyController.respond);
 	}
 }

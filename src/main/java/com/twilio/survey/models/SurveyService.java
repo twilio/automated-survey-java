@@ -7,6 +7,8 @@ import org.mongodb.morphia.Morphia;
 import com.mongodb.MongoClient;
 import com.twilio.survey.Server;
 
+// TODO: review staticness of these methods. I believe this to be valid, but it might be wise to double-check.
+
 public class SurveyService {
 	Datastore datastore;
 	Morphia morphia;
@@ -30,7 +32,8 @@ public class SurveyService {
 	public Object saveResponse(Response r){
 		return datastore.save(r).getId();
 	}
-	public Object getResponse(ObjectId id) {
-		return datastore.get(Response.class, id);
+	public Response getResponse(String id) {
+		ObjectId objId = new ObjectId(id); 
+		return datastore.get(Response.class, objId);
 	}
 }
