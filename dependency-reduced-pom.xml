@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.twilio.kitchensink</groupId>
-  <artifactId>twilio-kitchen-sink</artifactId>
-  <name>Twilio Kitchen Sink</name>
+  <groupId>com.twilio.survey</groupId>
+  <artifactId>twilio-survey</artifactId>
+  <name>Twilio Automated Survey: Java</name>
   <version>0.0.1-SNAPSHOT</version>
   <description>Demo application showcasing several simple examples of the Twilio API</description>
   <build>
@@ -27,7 +27,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.twilio.kitchensink.Server</mainClass>
+                  <mainClass>com.twilio.survey.Server</mainClass>
                 </transformer>
               </transformers>
             </configuration>

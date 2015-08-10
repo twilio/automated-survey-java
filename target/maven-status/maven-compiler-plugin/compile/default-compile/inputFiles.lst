@@ -1,2 +1,3 @@
-/Users/kwhinnery/dev/deved/apps/kitchen-sink/src/main/java/com/twilio/kitchensink/controllers/PersonController.java
-/Users/kwhinnery/dev/deved/apps/kitchen-sink/src/main/java/com/twilio/kitchensink/Server.java
+/Users/joh11115/Documents/workspace/survey-java/src/main/java/com/twilio/survey/models/Person.java
+/Users/joh11115/Documents/workspace/survey-java/src/main/java/com/twilio/survey/controllers/MessageController.java
+/Users/joh11115/Documents/workspace/survey-java/src/main/java/com/twilio/survey/Server.java
