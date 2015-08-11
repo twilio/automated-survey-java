@@ -3,37 +3,47 @@ package com.twilio.survey.models;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-
 import com.mongodb.MongoClient;
+
 import com.twilio.survey.Server;
 
-// TODO: review staticness of these methods. I believe this to be valid, but it might be wise to double-check.
-
-public class SurveyService {
-	Datastore datastore;
-	Morphia morphia;
+public class SurveyService {	
+	// MongoClient and Morphia instances must be accessible to the entire object, so a Datastore can be built.
 	MongoClient mongoClient;
+	Morphia morphia; 
+	
+	// An instance of Datastore must be accessible to the entire object, so all instance methods can persist to and read from the datastore.
+	Datastore datastore;
+	
+	// Constructor
 	public SurveyService(){
 		try {
+			// Create MongoDB drivers
 			mongoClient = new MongoClient(Server.config.mongoURI);
 			morphia = new Morphia();
-			// TODO: figure out which of these is necessary
 			
-		    morphia.mapPackage("com.twilio.survey");
-		    morphia.map(Response.class);
+			// Ask the Morphia driver to scan the Models package for models.
+		    morphia.mapPackage("com.twilio.survey.models");
 		    
-		    // TODO: make sure the name of the datastore matches whatever you called it in MongoLab...
 		} catch (Exception e) {
+			// Catch any MongoDB configuration errors, and pass them back to STDERR.
 			System.err.println(e.getMessage());
 		} finally {
+			// TODO: Remember to make sure the name of the datastore matches the MongoLab datastore name.
 			datastore = morphia.createDatastore(mongoClient, "survey-java");
 		}
 	}
-	public Object saveResponse(Response r){
-		return datastore.save(r).getId();
+	
+	// Demo method: persist a Response object to the DB
+	public Object saveResponse(Response res){
+		return datastore.save(res).getId();
 	}
+	// Demo method: retrieve a Response object from the DB
 	public Response getResponse(String id) {
+		// Transforming the String to an ObjectId here keeps the DB logic in the Model.
 		ObjectId objId = new ObjectId(id); 
+		
+		// Retrieve the object by its ID.
 		return datastore.get(Response.class, objId);
 	}
 }
