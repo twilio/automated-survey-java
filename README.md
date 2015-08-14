@@ -13,11 +13,9 @@ Use this example application to create a telephone survey.
   - ```PORT``` : The port on which the application will listen (default: 4567).
   - ```MONGO_URL``` : The MongoDB URL that points to your MongoDB database (e.g. ```mongodb://user@password:myawesomemongohost.com:27017```)
 
-  If you chose to run ```mongod``` locally, you do not need to specify a
-  ```MONGO_URL```.
+  If you chose to run ```mongod``` locally, you do not need to specify a ```MONGO_URL```.
 5. Start the server with ```java -jar target/server.jar```
-6. Open ```http://localhost:PORT``` in your web browser to explore (where
-  ```PORT``` is the port number you defined in step 3)
+6. Open ```http://localhost:PORT``` in your web browser to explore (where ```PORT``` is the port number you defined in step 3)
 
 ## Dependencies
 In order to build and run this project, a Java 1.8 JDK and
