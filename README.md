@@ -24,9 +24,9 @@ In order to build and run this project, a Java 1.8 JDK and
 [Maven](http://maven.apache.org) must be installed. A
 [Tomcat](http://tomcat.apache.org) server is recommended, but not required.
 
-This Maven project requires the following packages.
- - the Spark Framework
- - Spark's FreeMarker Template Engine Helpers
+This Maven project requires the following packages, which will be installed with the command ```mvn install```.
+ - the [Spark Framework](http://sparkjava.com)
+ - Spark's [FreeMarker Template Engine Helpers]()
  - MongoDB's Java Driver
  - MongoDB's Morphia Object-Document Mapper
  - Twilio's Java SDK
