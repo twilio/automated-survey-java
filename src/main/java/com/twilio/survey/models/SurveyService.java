@@ -1,10 +1,10 @@
 package com.twilio.survey.models;
 
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import com.mongodb.MongoClient;
+import org.mongodb.morphia.query.UpdateOperations;
 
+import com.mongodb.MongoClient;
 import com.twilio.survey.Server;
 
 public class SurveyService {
@@ -15,7 +15,7 @@ public class SurveyService {
 
   // An instance of Datastore must be accessible to the entire object, so all instance methods can
   // persist to and read from the datastore.
-  Datastore datastore;
+  final Datastore datastore;
 
   // Constructor
   public SurveyService() {
@@ -36,17 +36,22 @@ public class SurveyService {
     }
   }
 
-  // Demo method: persist a Response object to the DB
-  public Object saveResponse(Response res) {
-    return datastore.save(res).getId();
+  // Find, Update, and Create -- database operations.
+  public Survey getSurvey(String phone) {
+    return datastore.find(Survey.class).field("phone").equal(phone).field("done").equal(false)
+        .get();
   }
 
-  // Demo method: retrieve a Response object from the DB
-  public Response getResponse(String id) {
-    // Transforming the String to an ObjectId here keeps the DB logic in the Model.
-    ObjectId objId = new ObjectId(id);
+  public void updateSurvey(Survey survey) {
+    UpdateOperations<Survey> updates =
+        datastore.createUpdateOperations(Survey.class).set("done", survey.isDone())
+            .set("responses", survey.getResponses());
+    datastore.update(survey, updates);
+  }
 
-    // Retrieve the object by its ID.
-    return datastore.get(Response.class, objId);
+  public Survey createSurvey(String phone) {
+    Survey survey = new Survey(phone);
+    datastore.save(survey);
+    return survey;
   }
 }

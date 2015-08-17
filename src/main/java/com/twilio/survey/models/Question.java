@@ -1,5 +1,6 @@
 package com.twilio.survey.models;
 
+// Represents the questions as imported from JSON by Config.java
 public class Question {
   private String type;
   private String text;

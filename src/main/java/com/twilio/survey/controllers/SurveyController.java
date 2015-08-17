@@ -1,55 +1,94 @@
 package com.twilio.survey.controllers;
 
-import com.twilio.survey.models.Response;
+import com.twilio.survey.Server;
+import com.twilio.survey.models.Question;
 import com.twilio.survey.models.SurveyService;
+import com.twilio.survey.models.Survey;
+import com.twilio.survey.models.IncomingCall;
+import com.twilio.sdk.verbs.Gather;
+import com.twilio.sdk.verbs.TwiMLException;
+import com.twilio.sdk.verbs.TwiMLResponse;
+import com.twilio.sdk.verbs.Say;
+import com.twilio.sdk.verbs.Record;
+
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
+
+import com.google.gson.Gson;
+
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SurveyController {
-	private static SurveyService survey = new SurveyService();
-	private static FreeMarkerEngine templateEngine;
-	
-	// Configure and attach FreeMarker template engine to the class variable for easy access in route definitions.
-	public static void initializeTemplateEngine() {
-		templateEngine = new FreeMarkerEngine();
-		Configuration freeMarkerConfig = new Configuration();
-		freeMarkerConfig.setTemplateLoader(new ClassTemplateLoader(SurveyService.class, "/"));
-		templateEngine.setConfiguration(freeMarkerConfig);
-	}
-	
-	
-	public static Route index = (req, res) -> {
-		initializeTemplateEngine();
-		
-		// Create template keys/values
-		Map<String, Object> templateValues = new HashMap<>();
-		templateValues.put("greeting", "Ahoy hoy!");
-		
-		return templateEngine.render(new ModelAndView(templateValues, "index.ftl"));
-	};
-	
-	public static Route favoriteNumber = (req, res) -> {
-		initializeTemplateEngine();
-		
-		// Create template keys/values
-		Map<String, Object> templateValues = new HashMap<>();
-		templateValues.put("favoriteNumber", req.params(":number"));
-		
-		return templateEngine.render(new ModelAndView(templateValues, "template.ftl"));
-	};
-	
-	public static Route respond = (request, response) -> {
-		// Create Response object and commit it to the database, returning an ObjectId for retrieval
-		return survey.saveResponse(new Response(request.params(":phone")));
-	};
-	
-	public static Route getResponse = (request, response) -> { 
-		// Retrieve a Response object based on the ObjectId provided in the URL parameter
-		return survey.getResponse(request.params(":id")).getRespondent();
-	};
+  private static SurveyService surveys = new SurveyService();
+  private static FreeMarkerEngine templateEngine;
+
+  // Configure and attach FreeMarker template engine to the class variable for easy access in route
+  // definitions.
+  public static void initializeTemplateEngine() {
+    templateEngine = new FreeMarkerEngine();
+    Configuration freeMarkerConfig = new Configuration();
+    freeMarkerConfig.setTemplateLoader(new ClassTemplateLoader(SurveyService.class, "/"));
+    templateEngine.setConfiguration(freeMarkerConfig);
+  };
+
+  // Render landing page.
+  public static Route index = (req, res) -> {
+    initializeTemplateEngine();
+
+    // Create template keys/values
+      Map<String, Object> templateValues = new HashMap<>();
+      templateValues.put("greeting", "Ahoy hoy!");
+
+      return templateEngine.render(new ModelAndView(templateValues, "index.ftl"));
+    };
+
+  // Main interview loop.
+  public static Route interview = (request, response) -> {
+    Gson gson = new Gson();
+    IncomingCall call = gson.fromJson(request.body(), IncomingCall.class);
+    TwiMLResponse twiml = new TwiMLResponse();
+    Survey existingSurvey = surveys.getSurvey(call.getFrom());
+    if (existingSurvey == null) {
+      Survey survey = surveys.createSurvey(call.getFrom());
+      twiml.append(new Say("Thanks for taking our survey."));
+      twiml = continueSurvey(survey, twiml);
+    } else {
+      twiml.append(new Say("You already have a survey open with us, silly goose!"));
+      continueSurvey(existingSurvey, twiml);
+      response.type("text/xml");
+      response.body(twiml.toXML());
+    }
+    return twiml.toXML();
+  };
+
+  // Helper methods
+  private static TwiMLResponse continueSurvey(Survey survey, TwiMLResponse twiml)
+      throws TwiMLException {
+    Question q = Server.config.questions[survey.nextOpenQuestion()];
+    Say say = new Say(q.getText());
+    twiml.append(say);
+    switch (q.getType()) {
+      case "text":
+        Record text = new Record();
+        text.setFinishOnKey("#");
+        twiml.append(text);
+        break;
+      case "boolean":
+        Gather booleanGather = new Gather();
+        booleanGather.setNumDigits(1);
+        twiml.append(booleanGather);
+        break;
+      case "number":
+        Gather numberGather = new Gather();
+        numberGather.setNumDigits(3);
+        twiml.append(numberGather);
+        break;
+    }
+    return twiml;
+  }
 }

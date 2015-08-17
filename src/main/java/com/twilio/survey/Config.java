@@ -19,8 +19,9 @@ public class Config {
 
     // Set defaults, and override with environment variables, if present.
     port = 4567; // default to port 4567, the idiomatic Spark port.
-    String envMongoURL = "mongodb://localhost:27017"; // default to localhost, the idiomatic MongoDB host. The driver will
-                             // use the idiomatic MongoDB port by default.
+    String envMongoURL = "mongodb://localhost:27017"; // default to localhost, the idiomatic MongoDB
+                                                      // host. The driver will
+    // use the idiomatic MongoDB port by default.
 
     // Check the environment for the presence of configured variables.
     if (env.containsKey("PORT")) {
@@ -31,7 +32,7 @@ public class Config {
     } else if (env.containsKey("MONGO_URL")) {
       envMongoURL = env.get("MONGO_URL");
     }
-    
+
     mongoURI = new MongoClientURI(envMongoURL);
     questions = parseQuestionFile();
   }
@@ -42,8 +43,8 @@ public class Config {
     Question[] q = gson.fromJson(questionFileAsJson, Question[].class);
     return q;
   }
-  
-  private String importQuestionFile(){
+
+  private String importQuestionFile() {
     String questionFileAsString = "";
     try {
       Scanner questionFile = new Scanner(new File("questions.json"));
@@ -51,8 +52,7 @@ public class Config {
         questionFileAsString += questionFile.nextLine();
       }
       questionFile.close();
-    } 
-    catch (Exception e){
+    } catch (Exception e) {
       System.err.println(e.getMessage());
     }
     return questionFileAsString;
