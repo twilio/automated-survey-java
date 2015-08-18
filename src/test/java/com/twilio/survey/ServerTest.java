@@ -7,11 +7,6 @@ import org.junit.Test;
 
 public class ServerTest {
   public static Config config;
-  
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    
-  }
 
   @Test
   public void questionsImportedSuccessfully() {

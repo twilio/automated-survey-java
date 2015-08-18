@@ -1,12 +1,14 @@
 package com.twilio.survey.controllers;
 
 import com.twilio.survey.Server;
+import com.twilio.survey.models.IncomingCall;
 import com.twilio.survey.models.Question;
 import com.twilio.survey.models.Response;
 import com.twilio.survey.models.SurveyService;
 import com.twilio.survey.models.Survey;
-import com.twilio.survey.models.IncomingCall;
+
 import com.twilio.sdk.verbs.Gather;
+import com.twilio.sdk.verbs.Hangup;
 import com.twilio.sdk.verbs.Record;
 import com.twilio.sdk.verbs.Say;
 import com.twilio.sdk.verbs.TwiMLException;
@@ -14,8 +16,6 @@ import com.twilio.sdk.verbs.TwiMLResponse;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
-
-import com.google.gson.Gson;
 
 import spark.ModelAndView;
 import spark.Route;
@@ -56,7 +56,10 @@ public class SurveyController {
     IncomingCall call = new IncomingCall(parseBody(request.body()));
     TwiMLResponse twiml = new TwiMLResponse();
     Survey existingSurvey = surveys.getSurvey(call.getFrom());
-    if (existingSurvey == null) {
+    if (call.getInput() == null) {
+      twiml.append(new Say("An error occurred. Please try again."));
+      twiml.append(new Hangup());
+    } else if (existingSurvey == null) {
       Survey survey = surveys.createSurvey(call.getFrom());
       twiml.append(new Say("Thanks for taking our survey."));
       continueSurvey(survey, twiml);
@@ -79,7 +82,7 @@ public class SurveyController {
       case "text":
         Say textInstructions =
             new Say("Your response will be recorded after the tone. "
-                + "Once you have finished recording, press the # key.");
+                + "Once you have finished recording, press the #.");
         twiml.append(textInstructions);
         Record text = new Record();
         text.setFinishOnKey("#");
@@ -95,7 +98,7 @@ public class SurveyController {
         break;
       case "number":
         Say numInstructions =
-        new Say("Enter the number on your keypad, followed by the # key.");
+        new Say("Enter the number on your keypad, followed by the #.");
     twiml.append(numInstructions);
         Gather numberGather = new Gather();
         numberGather.setNumDigits(3);

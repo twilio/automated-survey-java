@@ -41,12 +41,8 @@ public class SurveyServiceTest {
     service.createSurvey(phone);
     Survey expected = service.getSurvey(phone);
     assertNotNull(expected);
-    
-    // UPDATE EXISTING SURVEY OBJECT
     Response newResponse = new Response("This is a string!");
     expected.appendResponse(newResponse);
-    
-    // COMMIT CHANGES TO DB
     service.updateSurvey(expected);
     
     Survey actual = service.getSurvey(phone);

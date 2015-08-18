@@ -21,7 +21,7 @@ public class IncomingCall {
 
   public IncomingCall(Map<String, String> parsedBody) {
     this.from = parsedBody.get("From");
-    this.recordingUrl = parsedBody.get("RecordingURL");
+    this.recordingUrl = parsedBody.get("RecordingUrl");
     this.digits = parsedBody.get("Digits");
     this.transcriptionText = parsedBody.get("TranscriptionText");
   }
