@@ -25,7 +25,7 @@ public class Config {
     port = 4567;
     // default to localhost, the idiomatic MongoDB host.
     String envMongoURL = "mongodb://localhost:27017/Test";
-    
+
     String envMongoDBName = "Test";
 
     // Check the environment for the presence of configured variables.
@@ -79,5 +79,5 @@ public class Config {
   public Question[] getQuestions() {
     return questions;
   }
-  
+
 }

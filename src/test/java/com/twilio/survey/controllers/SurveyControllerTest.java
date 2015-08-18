@@ -22,7 +22,8 @@ public class SurveyControllerTest {
 
   @Test
   public void testContinueSurvey() {
-    // Confirms that, if a TwiML response is returned, the XML includes a "Say" verb, and the user will receive some feedback.
+    // Confirms that, if a TwiML response is returned, the XML includes a "Say" verb, and the user
+    // will receive some feedback.
     Survey survey = new Survey();
     TwiMLResponse twiml = new TwiMLResponse();
     try {
@@ -30,13 +31,14 @@ public class SurveyControllerTest {
     } catch (TwiMLException e) {
       System.out.println(e.getMessage());
     }
-    
+
   }
 
   @Test
   public void testParseBody() {
     // Confirms that the body parser returns some valid key/value pair.
-    String testMaterial = "FromState=MN&FromCountry=US&CallerCountry=US&Direction=inbound&FromCity=MINNEAPOLIS&CalledCountry=US&CallerState=MNCallStatus=ringing&ApiVersion=2010-04-01";
+    String testMaterial =
+        "FromState=MN&FromCountry=US&CallerCountry=US&Direction=inbound&FromCity=MINNEAPOLIS&CalledCountry=US&CallerState=MNCallStatus=ringing&ApiVersion=2010-04-01";
     try {
       assertEquals(SurveyController.parseBody(testMaterial).get("Direction"), "inbound");
     } catch (UnsupportedEncodingException e) {

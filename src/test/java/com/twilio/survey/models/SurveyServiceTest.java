@@ -15,7 +15,7 @@ public class SurveyServiceTest {
     Config config = new Config();
     Server.config = config;
   }
-  
+
   @Test
   public void testGetSurvey() {
     SurveyService service = new SurveyService();
@@ -24,7 +24,7 @@ public class SurveyServiceTest {
     Survey actual = service.getSurvey(phone);
     assertEquals(expected.getId(), actual.getId());
   }
-  
+
   @Test
   public void testCreateSurvey() {
     SurveyService service = new SurveyService();
@@ -44,12 +44,12 @@ public class SurveyServiceTest {
     Response newResponse = new Response("This is a string!");
     expected.appendResponse(newResponse);
     service.updateSurvey(expected);
-    
+
     Survey actual = service.getSurvey(phone);
-    
+
     assertEquals(expected.getId(), actual.getId());
     assertEquals(expected.getResponses()[0].input, actual.getResponses()[0].input);
-    
+
   }
 
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 import com.google.gson.annotations.SerializedName;
 
 public class IncomingCall {
-  
+
   private String from;
   private String recordingUrl;
   private String digits;

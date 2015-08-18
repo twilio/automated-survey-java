@@ -15,7 +15,7 @@ public class Survey {
   private String phone;
 
   private boolean done;
-  
+
   private int index;
 
   @Embedded
@@ -35,7 +35,7 @@ public class Survey {
     this.phone = phone;
     this.index = 0;
   }
-  
+
   public Survey(Survey anotherSurvey) {
     System.arraycopy(anotherSurvey.responses, 0, this.responses, 0, anotherSurvey.responses.length);
     this.id = anotherSurvey.id;
@@ -58,13 +58,13 @@ public class Survey {
   }
 
   public boolean isDone() {
-    if (index > Server.config.getQuestions().length-1) {
+    if (index > Server.config.getQuestions().length - 1) {
       this.markDone();
     }
     return done;
-    
+
   }
-  
+
   public int getIndex() {
     return index;
   }

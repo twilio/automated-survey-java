@@ -63,7 +63,7 @@ public class SurveyController {
     } else if (!existingSurvey.isDone()) {
       existingSurvey.appendResponse(new Response(call.getInput()));
       surveys.updateSurvey(existingSurvey);
-      if (!existingSurvey.isDone()){
+      if (!existingSurvey.isDone()) {
         continueSurvey(existingSurvey, twiml);
       }
     }
@@ -88,7 +88,7 @@ public class SurveyController {
         break;
       case "boolean":
         Say boolInstructions =
-        new Say("Press 1 to respond 'true,' and press 2 to respond 'false.'");
+            new Say("Press 1 to respond 'true,' and press 2 to respond 'false.'");
         twiml.append(boolInstructions);
         Gather booleanGather = new Gather();
         booleanGather.setNumDigits(1);

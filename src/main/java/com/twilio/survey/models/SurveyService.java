@@ -36,6 +36,7 @@ public class SurveyService {
       datastore = morphia.createDatastore(mongoClient, "survey-java");
     }
   }
+
   public SurveyService(MongoClientURI mongoURI) {
     try {
       // Create MongoDB drivers
@@ -53,14 +54,14 @@ public class SurveyService {
       datastore = morphia.createDatastore(mongoClient, Server.config.getMongoDBName());
     }
   }
-  
+
 
   // Find, Update, and Create -- database operations.
   public Survey getSurvey(String phone) {
     try {
       Survey thisTest = datastore.find(Survey.class).field("phone").equal(phone).get();
       return thisTest;
-    } catch(Exception e) {
+    } catch (Exception e) {
       System.out.println(e.getMessage());
       return null;
     }
@@ -80,8 +81,7 @@ public class SurveyService {
       Survey survey = new Survey(phone);
       datastore.save(survey);
       return survey;
-    }
-    else {
+    } else {
       return existingSurvey;
     }
   }
