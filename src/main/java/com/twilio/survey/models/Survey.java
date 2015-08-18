@@ -69,7 +69,7 @@ public class Survey {
   public void appendResponse(Response response) {
     if (!this.isDone()) {
       this.responses[index++] = response;
-      if (index >= Server.config.getQuestions().length) {
+      if (index > Server.config.getQuestions().length) {
         this.markDone();
       }
     }
