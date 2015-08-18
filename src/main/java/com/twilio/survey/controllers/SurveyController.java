@@ -62,6 +62,7 @@ public class SurveyController {
       continueSurvey(survey, twiml);
     } else {
       existingSurvey.appendResponse(new Response(call.getInput()));
+      surveys.updateSurvey(existingSurvey);
       continueSurvey(existingSurvey, twiml);
     }
     return twiml.toXML();

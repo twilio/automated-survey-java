@@ -2,12 +2,12 @@ package com.twilio.survey.models;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.twilio.survey.Server;
+
 public class SurveyService {
   // MongoClient and Morphia instances must be accessible to the entire object, so a Datastore can
   // be built.
