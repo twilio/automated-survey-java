@@ -1,0 +1,8 @@
+{
+  "name": "Automated Survey: Java",
+  "description": "Sample application demonstrating automated voice surveys in Java",
+  "repository": "https://github.com/twilio/automated-survey-java",
+  "logo": "https://s3.amazonaws.com/howtodocs/twilio-logo.png",
+  "keywords": ["twilio", "java", "spark", "mongodb", "morphia", "surveys"],
+  "addons": ["mongolab"]
+}
