@@ -58,7 +58,11 @@ public class Survey {
   }
 
   public boolean isDone() {
+    if (index > Server.config.getQuestions().length-1) {
+      this.markDone();
+    }
     return done;
+    
   }
   
   public int getIndex() {
@@ -69,9 +73,6 @@ public class Survey {
   public void appendResponse(Response response) {
     if (!this.isDone()) {
       this.responses[index++] = response;
-      if (index > Server.config.getQuestions().length) {
-        this.markDone();
-      }
     }
   }
 

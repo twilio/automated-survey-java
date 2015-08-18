@@ -63,10 +63,11 @@ public class SurveyController {
     } else if (!existingSurvey.isDone()) {
       existingSurvey.appendResponse(new Response(call.getInput()));
       surveys.updateSurvey(existingSurvey);
-      continueSurvey(existingSurvey, twiml);
-    } else {
-      twiml.append(new Say("Your responses have been recorded. Thank you for your time!"));
+      if (!existingSurvey.isDone()){
+        continueSurvey(existingSurvey, twiml);
+      }
     }
+    twiml.append(new Say("Your responses have been recorded. Thank you for your time!"));
     return twiml.toXML();
   };
 
