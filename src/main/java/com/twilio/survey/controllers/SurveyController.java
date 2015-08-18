@@ -56,10 +56,7 @@ public class SurveyController {
     IncomingCall call = new IncomingCall(parseBody(request.body()));
     TwiMLResponse twiml = new TwiMLResponse();
     Survey existingSurvey = surveys.getSurvey(call.getFrom());
-    if (call.getInput() == null) {
-      twiml.append(new Say("An error occurred. Please try again."));
-      twiml.append(new Hangup());
-    } else if (existingSurvey == null) {
+    if (existingSurvey == null) {
       Survey survey = surveys.createSurvey(call.getFrom());
       twiml.append(new Say("Thanks for taking our survey."));
       continueSurvey(survey, twiml);
@@ -74,11 +71,11 @@ public class SurveyController {
   };
 
   // Helper methods
-  private static String continueSurvey(Survey survey, TwiMLResponse twiml) throws TwiMLException {
-    Question q = Server.config.getQuestions()[survey.getIndex()];
-    Say say = new Say(q.getText());
+  protected static String continueSurvey(Survey survey, TwiMLResponse twiml) throws TwiMLException {
+    Question question = Server.config.getQuestions()[survey.getIndex()];
+    Say say = new Say(question.getText());
     twiml.append(say);
-    switch (q.getType()) {
+    switch (question.getType()) {
       case "text":
         Say textInstructions =
             new Say("Your response will be recorded after the tone. "
@@ -91,15 +88,14 @@ public class SurveyController {
       case "boolean":
         Say boolInstructions =
         new Say("Press 1 to respond 'true,' and press 2 to respond 'false.'");
-    twiml.append(boolInstructions);
+        twiml.append(boolInstructions);
         Gather booleanGather = new Gather();
         booleanGather.setNumDigits(1);
         twiml.append(booleanGather);
         break;
       case "number":
-        Say numInstructions =
-        new Say("Enter the number on your keypad, followed by the #.");
-    twiml.append(numInstructions);
+        Say numInstructions = new Say("Enter the number on your keypad, followed by the #.");
+        twiml.append(numInstructions);
         Gather numberGather = new Gather();
         numberGather.setNumDigits(3);
         twiml.append(numberGather);
