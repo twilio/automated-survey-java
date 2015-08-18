@@ -7,10 +7,10 @@ import com.twilio.survey.models.SurveyService;
 import com.twilio.survey.models.Survey;
 import com.twilio.survey.models.IncomingCall;
 import com.twilio.sdk.verbs.Gather;
+import com.twilio.sdk.verbs.Record;
+import com.twilio.sdk.verbs.Say;
 import com.twilio.sdk.verbs.TwiMLException;
 import com.twilio.sdk.verbs.TwiMLResponse;
-import com.twilio.sdk.verbs.Say;
-import com.twilio.sdk.verbs.Record;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -22,6 +22,8 @@ import spark.Route;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,8 +53,7 @@ public class SurveyController {
 
   // Main interview loop.
   public static Route interview = (request, response) -> {
-    Gson gson = new Gson();
-    IncomingCall call = gson.fromJson(request.body(), IncomingCall.class);
+    IncomingCall call = new IncomingCall(parseBody(request.body()));
     TwiMLResponse twiml = new TwiMLResponse();
     Survey existingSurvey = surveys.getSurvey(call.getFrom());
     if (existingSurvey == null) {
@@ -90,5 +91,19 @@ public class SurveyController {
         break;
     }
     return twiml.toXML();
+  }
+  public static Map<String, String> parseBody(String body) throws UnsupportedEncodingException {
+    String[] unparsedParams = body.split("&");
+    Map<String, String> parsedParams = new HashMap<String, String>();
+    for (int i=0; i<unparsedParams.length; i++) {
+      String[] param = unparsedParams[i].split("=");
+      if (param.length == 2) {
+        parsedParams.put(URLDecoder.decode(param[0], "utf-8"), URLDecoder.decode(param[1], "utf-8"));
+      }
+      else if (param.length == 1){
+        parsedParams.put(URLDecoder.decode(param[0], "utf-8"), "");
+      }
+    }
+    return parsedParams;
   }
 }

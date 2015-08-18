@@ -24,7 +24,9 @@ public class Config {
     // default to port 4567, the idiomatic Spark port.
     port = 4567;
     // default to localhost, the idiomatic MongoDB host.
-    String envMongoURL = "mongodb://localhost:27017";
+    String envMongoURL = "mongodb://localhost:27017/Test";
+    
+    String envMongoDBName = "Test";
 
     // Check the environment for the presence of configured variables.
     if (env.containsKey("PORT")) {
