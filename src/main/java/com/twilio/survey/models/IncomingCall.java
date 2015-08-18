@@ -27,12 +27,12 @@ public class IncomingCall {
     return from;
   }
 
-  public String getRecordingUrl() {
-    return recordingUrl;
-  }
-
-  public String getDigits() {
-    return digits;
+  public String getInput() {
+    if (recordingUrl != null) {
+      return recordingUrl;
+    } else {
+      return digits;
+    }
   }
 
   public String getTranscriptionText() {

@@ -15,7 +15,7 @@ public class Server {
     config = new Config();
 
     // configure Spark to use the desired port.
-    port(Server.config.port);
+    port(Server.config.getPort());
 
     // Map routes to controllers.
     get("/", SurveyController.index);

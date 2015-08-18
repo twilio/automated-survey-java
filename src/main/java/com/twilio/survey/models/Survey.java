@@ -24,16 +24,24 @@ public class Survey {
   // Constructors
   public Survey() {
     this.phone = null;
-    this.responses = new Response[Server.config.questions.length];
+    this.responses = new Response[Server.config.getQuestions().length];
     this.done = false;
     this.index = 0;
   }
 
   public Survey(String phone) {
-    this.responses = new Response[Server.config.questions.length];
+    this.responses = new Response[Server.config.getQuestions().length];
     this.done = false;
     this.phone = phone;
     this.index = 0;
+  }
+  
+  public Survey(Survey anotherSurvey) {
+    System.arraycopy(anotherSurvey.responses, 0, this.responses, 0, anotherSurvey.responses.length);
+    this.id = anotherSurvey.id;
+    this.phone = anotherSurvey.phone;
+    this.index = anotherSurvey.index;
+    this.done = anotherSurvey.done;
   }
 
   // Accessors
@@ -53,15 +61,17 @@ public class Survey {
     return done;
   }
   
-  public int nextOpenQuestion() {
+  public int getIndex() {
     return index;
   }
 
   // Mutators
   public void appendResponse(Response response) {
-    this.responses[index++] = response;
-    if (index > Server.config.questions.length) {
-      this.markDone();
+    if (!this.isDone()) {
+      this.responses[index++] = response;
+      if (index >= Server.config.getQuestions().length) {
+        this.markDone();
+      }
     }
   }
 

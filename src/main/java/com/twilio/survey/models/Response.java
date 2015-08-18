@@ -1,29 +1,24 @@
 package com.twilio.survey.models;
 
+import org.mongodb.morphia.annotations.Embedded;
+
+@Embedded
 public class Response {
-  String phone;
 
-  Question question;
-
-  // At this point, we don't know what the input will be, so we'll need to leave this open to
-  // interpretation. TODO: narrow this.
-  Object input;
+  // The content of Twilio's request.
+  String input;
 
 
   // Constructors
-  public Response(String phone, Question question, Object input) {
-    this.phone = phone;
+  public Response(String input) {
     this.input = input;
   }
 
   public Response() {}
 
   // Accessors
-  public String getPhone() {
-    return phone;
-  }
 
-  public Object getInput() {
+  public String getInput() {
     return input;
   }
 

@@ -16,8 +16,8 @@ public class ServerTest {
   @Test
   public void questionsImportedSuccessfully() {
     config = new Config();
-    assertTrue(config.questions.length > 0);
-    assertNotNull(config.questions);
+    assertTrue(config.getQuestions().length > 0);
+    assertNotNull(config.getQuestions());
   }
   
   

@@ -2,6 +2,7 @@ package com.twilio.survey.controllers;
 
 import com.twilio.survey.Server;
 import com.twilio.survey.models.Question;
+import com.twilio.survey.models.Response;
 import com.twilio.survey.models.SurveyService;
 import com.twilio.survey.models.Survey;
 import com.twilio.survey.models.IncomingCall;
@@ -18,13 +19,14 @@ import com.google.gson.Gson;
 
 import spark.ModelAndView;
 import spark.Route;
+import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SurveyController {
-  private static SurveyService surveys = new SurveyService();
+  private static SurveyService surveys = new SurveyService(Server.config.getMongoURI());
   private static FreeMarkerEngine templateEngine;
 
   // Configure and attach FreeMarker template engine to the class variable for easy access in route
@@ -56,20 +58,18 @@ public class SurveyController {
     if (existingSurvey == null) {
       Survey survey = surveys.createSurvey(call.getFrom());
       twiml.append(new Say("Thanks for taking our survey."));
-      twiml = continueSurvey(survey, twiml);
+      continueSurvey(survey, twiml);
     } else {
-      twiml.append(new Say("You already have a survey open with us, silly goose!"));
+      existingSurvey.appendResponse(new Response(call.getInput()));
       continueSurvey(existingSurvey, twiml);
-      response.type("text/xml");
-      response.body(twiml.toXML());
     }
     return twiml.toXML();
   };
 
   // Helper methods
-  private static TwiMLResponse continueSurvey(Survey survey, TwiMLResponse twiml)
+  private static String continueSurvey(Survey survey, TwiMLResponse twiml)
       throws TwiMLException {
-    Question q = Server.config.questions[survey.nextOpenQuestion()];
+    Question q = Server.config.getQuestions()[survey.getIndex()];
     Say say = new Say(q.getText());
     twiml.append(say);
     switch (q.getType()) {
@@ -89,6 +89,6 @@ public class SurveyController {
         twiml.append(numberGather);
         break;
     }
-    return twiml;
+    return twiml.toXML();
   }
 }
