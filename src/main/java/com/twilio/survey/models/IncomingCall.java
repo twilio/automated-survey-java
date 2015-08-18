@@ -1,17 +1,14 @@
 package com.twilio.survey.models;
 
+import java.util.Map;
+
 import com.google.gson.annotations.SerializedName;
 
 public class IncomingCall {
-  // Annotate each field, so Gson knows to map the appropriate JSON field name to the correct
-  // instance variable.
-  @SerializedName("From")
+  
   private String from;
-  @SerializedName("RecordingUrl")
   private String recordingUrl;
-  @SerializedName("Digits")
   private String digits;
-  @SerializedName("TranscriptionText")
   private String transcriptionText;
 
   // Constructor
@@ -20,6 +17,13 @@ public class IncomingCall {
     this.recordingUrl = recordingUrl;
     this.digits = digits;
     this.transcriptionText = transcriptionText;
+  }
+
+  public IncomingCall(Map<String, String> parsedBody) {
+    this.from = parsedBody.get("From");
+    this.recordingUrl = parsedBody.get("RecordingURL");
+    this.digits = parsedBody.get("Digits");
+    this.transcriptionText = parsedBody.get("TranscriptionText");
   }
 
   // Accessors
