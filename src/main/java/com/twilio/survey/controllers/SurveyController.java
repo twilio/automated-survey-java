@@ -60,32 +60,43 @@ public class SurveyController {
       Survey survey = surveys.createSurvey(call.getFrom());
       twiml.append(new Say("Thanks for taking our survey."));
       continueSurvey(survey, twiml);
-    } else {
+    } else if (!existingSurvey.isDone()) {
       existingSurvey.appendResponse(new Response(call.getInput()));
       surveys.updateSurvey(existingSurvey);
       continueSurvey(existingSurvey, twiml);
+    } else {
+      twiml.append(new Say("Your responses have been recorded. Thank you for your time!"));
     }
     return twiml.toXML();
   };
 
   // Helper methods
-  private static String continueSurvey(Survey survey, TwiMLResponse twiml)
-      throws TwiMLException {
+  private static String continueSurvey(Survey survey, TwiMLResponse twiml) throws TwiMLException {
     Question q = Server.config.getQuestions()[survey.getIndex()];
     Say say = new Say(q.getText());
     twiml.append(say);
     switch (q.getType()) {
       case "text":
+        Say textInstructions =
+            new Say("Your response will be recorded after the tone. "
+                + "Once you have finished recording, press the # key.");
+        twiml.append(textInstructions);
         Record text = new Record();
         text.setFinishOnKey("#");
         twiml.append(text);
         break;
       case "boolean":
+        Say boolInstructions =
+        new Say("Press 1 to respond 'true,' and press 2 to respond 'false.'");
+    twiml.append(boolInstructions);
         Gather booleanGather = new Gather();
         booleanGather.setNumDigits(1);
         twiml.append(booleanGather);
         break;
       case "number":
+        Say numInstructions =
+        new Say("Enter the number on your keypad, followed by the # key.");
+    twiml.append(numInstructions);
         Gather numberGather = new Gather();
         numberGather.setNumDigits(3);
         twiml.append(numberGather);
@@ -93,15 +104,16 @@ public class SurveyController {
     }
     return twiml.toXML();
   }
+
   public static Map<String, String> parseBody(String body) throws UnsupportedEncodingException {
     String[] unparsedParams = body.split("&");
     Map<String, String> parsedParams = new HashMap<String, String>();
-    for (int i=0; i<unparsedParams.length; i++) {
+    for (int i = 0; i < unparsedParams.length; i++) {
       String[] param = unparsedParams[i].split("=");
       if (param.length == 2) {
-        parsedParams.put(URLDecoder.decode(param[0], "utf-8"), URLDecoder.decode(param[1], "utf-8"));
-      }
-      else if (param.length == 1){
+        parsedParams
+            .put(URLDecoder.decode(param[0], "utf-8"), URLDecoder.decode(param[1], "utf-8"));
+      } else if (param.length == 1) {
         parsedParams.put(URLDecoder.decode(param[0], "utf-8"), "");
       }
     }
