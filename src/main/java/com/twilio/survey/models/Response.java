@@ -1,30 +1,25 @@
 package com.twilio.survey.models;
 
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Embedded;
 
-@Entity
+@Embedded
 public class Response {
-  // Use Morphia's annotations to create an object with an arbitrary ObjectId as its primary key
-  @Id
-  ObjectId id;
 
-  // Morphia will automatically annotate the instance variables for use with MongoDB.
-  String respondent;
+  // The content of Twilio's request.
+  String input;
+
 
   // Constructors
-  public Response(String phone) {
-    id = new ObjectId();
-    respondent = phone;
+  public Response(String input) {
+    this.input = input;
   }
 
-  public Response() {
-    id = new ObjectId();
-  }
+  public Response() {}
 
   // Accessors
-  public String getRespondent() {
-    return respondent;
+
+  public String getInput() {
+    return input;
   }
+
 }
