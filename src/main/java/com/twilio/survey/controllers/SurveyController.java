@@ -11,14 +11,11 @@ import com.twilio.sdk.verbs.Record;
 import com.twilio.sdk.verbs.Say;
 import com.twilio.sdk.verbs.TwiMLException;
 import com.twilio.sdk.verbs.TwiMLResponse;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.template.Configuration;
-import spark.ModelAndView;
 import spark.Route;
-import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -28,27 +25,6 @@ import java.util.Map;
 
 public class SurveyController {
   private static SurveyService surveys = new SurveyService(Server.config.getMongoURI());
-  private static FreeMarkerEngine templateEngine;
-
-  // Configure and attach FreeMarker template engine to the class variable for easy access in route
-  // definitions.
-  public static void initializeTemplateEngine() {
-    templateEngine = new FreeMarkerEngine();
-    Configuration freeMarkerConfig = new Configuration();
-    freeMarkerConfig.setTemplateLoader(new ClassTemplateLoader(SurveyService.class, "/"));
-    templateEngine.setConfiguration(freeMarkerConfig);
-  };
-
-  // Render landing page.
-  public static Route index = (req, res) -> {
-    initializeTemplateEngine();
-
-    // Create template keys/values
-      Map<String, Object> templateValues = new HashMap<>();
-      templateValues.put("greeting", "Ahoy hoy!");
-
-      return templateEngine.render(new ModelAndView(templateValues, "index.ftl"));
-    };
 
   // Main interview loop.
   public static Route interview = (request, response) -> {
@@ -75,28 +51,28 @@ public class SurveyController {
     Gson gson = new Gson();
     JsonObject json = new JsonObject();
     // Add questions to the JSON response object
-    json.add("survey", gson.toJsonTree(Server.config.getQuestions()));
-    // Add user responses to the JSON response object
-    json.add("results", gson.toJsonTree(surveys.findAllFinishedSurveys()));
-    response.type("application/json");
-    return json;
-  };
+      json.add("survey", gson.toJsonTree(Server.config.getQuestions()));
+      // Add user responses to the JSON response object
+      json.add("results", gson.toJsonTree(surveys.findAllFinishedSurveys()));
+      response.type("application/json");
+      return json;
+    };
 
   // Transcription route (called by Twilio's callback, once transcription is complete)
   public static Route transcribe = (request, response) -> {
     IncomingCall call = new IncomingCall(parseBody(request.body()));
     // Get the phone and question numbers from the URL parameters provided by the "Record" TwiML
     // verb
-    String surveyId = request.params(":phone");
-    int questionId = Integer.parseInt(request.params(":question"));
-    // Find the survey in the DB...
-    Survey survey = surveys.getSurvey(surveyId);
-    // ...and update it with our transcription text.
-    survey.getResponses()[questionId].setAnswer(call.getTranscriptionText());
-    surveys.updateSurvey(survey);
-    response.status(200);
-    return "OK";
-  };
+      String surveyId = request.params(":phone");
+      int questionId = Integer.parseInt(request.params(":question"));
+      // Find the survey in the DB...
+      Survey survey = surveys.getSurvey(surveyId);
+      // ...and update it with our transcription text.
+      survey.getResponses()[questionId].setAnswer(call.getTranscriptionText());
+      surveys.updateSurvey(survey);
+      response.status(200);
+      return "OK";
+    };
 
   // Helper methods
   protected static String continueSurvey(Survey survey, TwiMLResponse twiml) throws TwiMLException,

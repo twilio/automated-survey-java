@@ -2,11 +2,11 @@ package com.twilio.survey.models;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import com.twilio.survey.Server;
 import com.twilio.survey.util.Config;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class SurveyServiceTest {
 
