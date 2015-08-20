@@ -60,13 +60,7 @@ public class SurveyService {
 
   // Find, Update, and Create -- database operations.
   public Survey getSurvey(String phone) {
-    try {
-      Survey thisTest = datastore.find(Survey.class).field("phone").equal(phone).get();
-      return thisTest;
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
+    return datastore.find(Survey.class).field("phone").equal(phone).get();
   }
 
   public void updateSurvey(Survey survey) {
