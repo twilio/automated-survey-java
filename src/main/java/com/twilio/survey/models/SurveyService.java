@@ -18,7 +18,7 @@ public class SurveyService {
 
   // An instance of Datastore must be accessible to the entire object, so all instance methods can
   // persist to and read from the datastore.
-  final Datastore datastore;
+  Datastore datastore;
 
   // Constructor
   public SurveyService() {
@@ -29,13 +29,10 @@ public class SurveyService {
 
       // Ask the Morphia driver to scan the Models package for models.
       morphia.mapPackage("com.twilio.survey.models");
-
+      datastore = morphia.createDatastore(mongoClient, Server.config.getMongoDBName());
     } catch (Exception e) {
       // Catch any MongoDB configuration errors, and pass them back to STDERR.
       System.err.println(e.getMessage());
-    } finally {
-      // TODO: Remember to make sure the name of the datastore matches the MongoLab datastore name.
-      datastore = morphia.createDatastore(mongoClient, "survey-java");
     }
   }
 
