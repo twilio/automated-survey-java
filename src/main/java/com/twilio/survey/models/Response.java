@@ -17,6 +17,8 @@ public class Response {
     }
     if (input.contains("http:")) {
       this.recordingUrl = input;
+    } else if(input.equals("0")) {
+      this.answer = "false";
     } else {
       this.answer = input;
     }
@@ -26,7 +28,7 @@ public class Response {
 
   // Accessors
 
-  public String getAnswer() {
+  public Object getAnswer() {
     return answer;
   }
   
