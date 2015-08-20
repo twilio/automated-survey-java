@@ -4,7 +4,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.twilio.survey</groupId>
 	<artifactId>twilio-survey</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>Twilio Automated Survey: Java</name>
 	<description>Demo application showcasing several simple examples of the Twilio API</description>
 
@@ -98,4 +97,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<version>1.0.0</version>
 </project>
