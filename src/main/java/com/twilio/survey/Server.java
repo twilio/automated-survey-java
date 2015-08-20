@@ -3,7 +3,7 @@ package com.twilio.survey;
 import static spark.Spark.*;
 
 import com.twilio.survey.controllers.SurveyController;
-import com.twilio.survey.Config;
+import com.twilio.survey.util.Config;
 
 public class Server {
   // Create field to hold environment configuration.

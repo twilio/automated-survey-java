@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.twilio.survey.Config;
 import com.twilio.survey.Server;
+import com.twilio.survey.util.Config;
 
 public class SurveyServiceTest {
 

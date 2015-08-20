@@ -1,4 +1,4 @@
-package com.twilio.survey;
+package com.twilio.survey.util;
 
 import java.io.File;
 import java.util.Map;
@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import com.mongodb.MongoClientURI;
 import com.google.gson.*; // TODO: Resolve wildcard import
-import com.twilio.survey.models.Question;
 
 
 public class Config {

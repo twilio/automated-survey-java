@@ -1,4 +1,4 @@
-package com.twilio.survey.models;
+package com.twilio.survey.util;
 
 // Represents the questions as imported from JSON by Config.java
 public class Question {

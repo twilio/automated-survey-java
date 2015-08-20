@@ -8,9 +8,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.twilio.sdk.verbs.TwiMLResponse;
-import com.twilio.survey.Config;
 import com.twilio.survey.Server;
 import com.twilio.survey.models.Survey;
+import com.twilio.survey.util.Config;
 
 public class SurveyControllerTest {
   @BeforeClass

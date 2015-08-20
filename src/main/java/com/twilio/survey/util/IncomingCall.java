@@ -1,4 +1,4 @@
-package com.twilio.survey.models;
+package com.twilio.survey.util;
 
 import java.util.Map;
 

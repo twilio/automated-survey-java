@@ -81,7 +81,7 @@ public class SurveyService {
       return existingSurvey;
     }
   }
-  
+
   public List<Survey> findAllFinishedSurveys() {
     return datastore.find(Survey.class).field("done").equal(true).asList();
   }

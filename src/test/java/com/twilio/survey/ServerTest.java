@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.twilio.survey.util.Config;
+
 public class ServerTest {
   public static Config config;
 

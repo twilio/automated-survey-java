@@ -1,17 +1,16 @@
 package com.twilio.survey.controllers;
 
 import com.twilio.survey.Server;
-import com.twilio.survey.models.IncomingCall;
-import com.twilio.survey.models.Question;
 import com.twilio.survey.models.Response;
 import com.twilio.survey.models.SurveyService;
 import com.twilio.survey.models.Survey;
+import com.twilio.survey.util.IncomingCall;
+import com.twilio.survey.util.Question;
 import com.twilio.sdk.verbs.Gather;
 import com.twilio.sdk.verbs.Record;
 import com.twilio.sdk.verbs.Say;
 import com.twilio.sdk.verbs.TwiMLException;
 import com.twilio.sdk.verbs.TwiMLResponse;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
