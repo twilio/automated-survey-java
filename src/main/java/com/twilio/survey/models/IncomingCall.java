@@ -2,8 +2,6 @@ package com.twilio.survey.models;
 
 import java.util.Map;
 
-import com.google.gson.annotations.SerializedName;
-
 public class IncomingCall {
 
   private String from;

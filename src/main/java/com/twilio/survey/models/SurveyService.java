@@ -1,5 +1,7 @@
 package com.twilio.survey.models;
 
+import java.util.List;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -84,5 +86,9 @@ public class SurveyService {
     } else {
       return existingSurvey;
     }
+  }
+  
+  public List<Survey> findAllFinishedSurveys() {
+    return datastore.find(Survey.class).field("done").equal(true).asList();
   }
 }

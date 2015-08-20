@@ -45,7 +45,7 @@ public class Survey {
   }
 
   // Accessors
-  public Object getId() {
+  public ObjectId getId() {
     return id;
   }
 

@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.twilio.sdk.verbs.TwiMLException;
 import com.twilio.sdk.verbs.TwiMLResponse;
 import com.twilio.survey.Config;
 import com.twilio.survey.Server;
@@ -28,7 +27,7 @@ public class SurveyControllerTest {
     TwiMLResponse twiml = new TwiMLResponse();
     try {
       assertTrue(SurveyController.continueSurvey(survey, twiml).contains("Say"));
-    } catch (TwiMLException e) {
+    } catch (Exception e) {
       System.out.println(e.getMessage());
     }
 

@@ -17,7 +17,7 @@ public class SurveyServiceTest {
   }
 
   @Test
-  public void testGetSurvey() {
+  public void testGetSurveyString() {
     SurveyService service = new SurveyService();
     String phone = "5555555556";
     Survey expected = service.createSurvey(phone);
@@ -48,7 +48,7 @@ public class SurveyServiceTest {
     Survey actual = service.getSurvey(phone);
 
     assertEquals(expected.getId(), actual.getId());
-    assertEquals(expected.getResponses()[0].input, actual.getResponses()[0].input);
+    assertEquals(expected.getResponses()[0].getAnswer(), actual.getResponses()[0].getAnswer());
 
   }
 
