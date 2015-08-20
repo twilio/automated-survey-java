@@ -22,26 +22,23 @@ public class Survey {
   private Response[] responses;
 
   // Constructors
-  public Survey() {
-    this.phone = null;
-    this.responses = new Response[Server.config.getQuestions().length];
-    this.done = false;
-    this.index = 0;
-  }
-
   public Survey(String phone) {
     this.responses = new Response[Server.config.getQuestions().length];
     this.done = false;
     this.phone = phone;
     this.index = 0;
   }
-
+  
   public Survey(Survey anotherSurvey) {
     System.arraycopy(anotherSurvey.responses, 0, this.responses, 0, anotherSurvey.responses.length);
     this.id = anotherSurvey.id;
     this.phone = anotherSurvey.phone;
     this.index = anotherSurvey.index;
     this.done = anotherSurvey.done;
+  }
+  
+  public Survey() {
+    this("+0000000000");
   }
 
   // Accessors

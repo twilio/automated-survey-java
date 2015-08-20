@@ -21,21 +21,6 @@ public class SurveyService {
   Datastore datastore;
 
   // Constructor
-  public SurveyService() {
-    try {
-      // Create MongoDB drivers
-      mongoClient = new MongoClient();
-      morphia = new Morphia();
-
-      // Ask the Morphia driver to scan the Models package for models.
-      morphia.mapPackage("com.twilio.survey.models");
-      datastore = morphia.createDatastore(mongoClient, Server.config.getMongoDBName());
-    } catch (Exception e) {
-      // Catch any MongoDB configuration errors, and pass them back to STDERR.
-      System.err.println(e.getMessage());
-    }
-  }
-
   public SurveyService(MongoClientURI mongoURI) {
     try {
       // Create MongoDB drivers
@@ -53,7 +38,10 @@ public class SurveyService {
       datastore = morphia.createDatastore(mongoClient, Server.config.getMongoDBName());
     }
   }
-
+  
+  public SurveyService() {
+    this(Server.config.getMongoURI());
+  }
 
   // Find, Update, and Create -- database operations.
   public Survey getSurvey(String phone) {

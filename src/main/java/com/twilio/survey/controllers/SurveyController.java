@@ -50,7 +50,7 @@ public class SurveyController {
   public static Route results = (request, response) -> {
     Gson gson = new Gson();
     JsonObject json = new JsonObject();
-    // Add questions to the JSON response object
+      // Add questions to the JSON response object
       json.add("survey", gson.toJsonTree(Server.config.getQuestions()));
       // Add user responses to the JSON response object
       json.add("results", gson.toJsonTree(surveys.findAllFinishedSurveys()));
@@ -61,8 +61,7 @@ public class SurveyController {
   // Transcription route (called by Twilio's callback, once transcription is complete)
   public static Route transcribe = (request, response) -> {
     IncomingCall call = new IncomingCall(parseBody(request.body()));
-    // Get the phone and question numbers from the URL parameters provided by the "Record" TwiML
-    // verb
+      // Get the phone and question numbers from the URL parameters provided by the "Record" verb
       String surveyId = request.params(":phone");
       int questionId = Integer.parseInt(request.params(":question"));
       // Find the survey in the DB...
@@ -131,7 +130,7 @@ public class SurveyController {
     return parsedParams;
   }
 
-  // Wrap the URLEncoder and URLDecoder for cleaner code.
+  // Wrap the URLEncoder and URLDecoder for cleanliness.
   public static String urlEncode(String s) throws UnsupportedEncodingException {
     return URLEncoder.encode(s, "utf-8");
   }

@@ -18,7 +18,6 @@ public class Server {
     port(Server.config.getPort());
 
     // Map routes to controllers.
-    //get("/", SurveyController.index);
     staticFileLocation("/public");
     post("/interview", SurveyController.interview);
     post("/interview/:phone/transcribe/:question", SurveyController.transcribe);
