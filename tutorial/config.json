@@ -1,0 +1,6 @@
+{
+    "title": "Automated Surveys in Java (Spark)",
+    "repo": "twilio/automated-survey-java",
+    "description": "Learn to create an automated telephone survey in Java with Twilio.",
+    "heroku": true
+}
