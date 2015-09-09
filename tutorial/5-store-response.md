@@ -1,5 +1,10 @@
-## STORE A CALLER'S RESPONSE
-After each TwiML verb is executed and input is collected, Twilio sends the application that input, along with a request for more TwiML. The  ```/interview``` route in our controller handles that input, and passes it to the model to update the survey. Using MongoDB's [Morphia](http://mongodb.github.io/morphia/) document-object mapper, the question index, responses, and completeness status of the survey are updated.
+## Store a caller's response
+After each TwiML verb is executed and input is collected, Twilio sends the 
+application that input, along with a request for more TwiML. The  
+```/interview``` route in our controller handles that input, and passes it to 
+the model to update the survey. Using MongoDB's [Morphia](http://mongodb.github.io/morphia/) 
+document-object mapper, the question index, responses, and completeness status 
+of the survey are updated.
 
 ---
 **See also:**

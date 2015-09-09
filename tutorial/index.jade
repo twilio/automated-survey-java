@@ -1,27 +1,29 @@
 .chapter(data-title='Automated Surveys in Java (Spark)')
-  .step(data-title='About this application', data-file='src/main/java/com/twilio/survey/Server.java')
+  .step(data-file='com/twilio/survey/Server.java')
     include:markdown intro.md
 
-  .step(data-title='Configure the application' data-file=".env.example")
-    include:markdown 0-configure.md
-
-  .step(data-title='Create a survey', data-file='questions.json', data-highlight='')
+  .step(data-title='Create a survey', data-file='questions.json')
     include:markdown 1-create-survey.md
 
-  .step(data-title='Accept a call', data-file='src/main/java/com/twilio/survey/controllers/SurveyController.java', data-highlight='30-47')
+  .step(data-file='com/twilio/survey/controllers/SurveyController.java', 
+    data-highlight='30-47')
     include:markdown 2-accept-call.md
 
-  .step(data-title='Ask a question', data-file='src/main/java/com/twilio/survey/controllers/SurveyController.java', data-highlight='77-116')
+  .step(data-file='com/twilio/survey/controllers/SurveyController.java', 
+    data-highlight='77-116')
     include:markdown 3-ask-question.md
 
-  .step(data-title='Use a transcript of a voice response', data-file='src/main/java/com/twilio/survey/controllers/SurveyController.java', data-highlight='61-74')
+  .step(data-file='com/twilio/survey/controllers/SurveyController.java', 
+    data-highlight='61-74')
     include:markdown 4-use-transcript.md
 
-  .step(data-title='Store a caller’s response', data-file='src/main/java/com/twilio/survey/models/SurveyService.java', data-highlight='51-57')
+  .step(data-file='com/twilio/survey/models/SurveyService.java', 
+    data-highlight='51-57')
     include:markdown 5-store-response.md
 
-  .step(data-title='Display results', data-file='src/main/java/com/twilio/survey/controllers/SurveyController.java', data-highlight='49-59')
+  .step(data-file='com/twilio/survey/controllers/SurveyController.java', 
+    data-highlight='49-59')
     include:markdown 6-display-results.md
 
-  .step(data-title='Where to next?', data-file='src/main/java/com/twilio/survey/Server.java' data-highlight='8-27')
+  .step
     include:markdown concl.md

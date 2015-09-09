@@ -1,7 +1,8 @@
-## DISPLAY RESULTS
-To view the results, the completed surveys are serialized to [JSON objects](http://json.org), which are used to populate the dashboard. Here, the dashboard is served as HTML, CSS, and JavaScript files, on the root (```/```) route of the application.  Open your application's root in a web browser to view the dashboard.
-
-The results dashboard for this example application uses [jQuery](http://jquery.com) to dynamically update the response data, but, because the response data is exposed by the application as JSON, you could use any library you like ([or no library at all](https://en.wikipedia.org/wiki/XMLHttpRequest)) to pull in the data from your app with an AJAX request, and use it to populate a dashboard of your own design.
+## Display survey results
+To view the results, the completed surveys are serialized to 
+[JSON](http://json.org), which is used to populate the dashboard. The dashboard 
+is served on the root (```/```) URL of the application. We use [jQuery](http://jquery.com) 
+to call this route via Ajax, and display the results in charts on the home page.
 
 ---
 **See also:**

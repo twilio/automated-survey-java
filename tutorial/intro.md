@@ -1,12 +1,9 @@
-## ABOUT THIS APPLICATION
+## About This Application
 
-This [Spark](http://sparkjava.com) app uses the [TwiML API](https://www.twilio.com/docs/api/twiml)
+This [Spark](http://sparkjava.com) app uses the [Twilio API](https://www.twilio.com/docs/api/twiml)
 to create an automated survey conducted over a phone call. Callers will
 interact with this application over the phone, by calling your Twilio number,
-while you can view the results on a dynamic dashboard. Many of the other routes
-will be accessed by Twilio directly, to pass user input into the app, and to
-provide your Twilio number with instructions (TwiML verbs) that describe what
-to do next.
+while you can view the results on a dynamic dashboard.
 
 Check out the source code for this application on [GitHub](http://github.com/twilio/automated-survey-java).
 
