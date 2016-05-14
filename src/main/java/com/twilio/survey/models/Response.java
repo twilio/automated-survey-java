@@ -25,7 +25,6 @@ public class Response {
   }
 
   public Response() {
-    this(null);
   }
 
   // Accessors
